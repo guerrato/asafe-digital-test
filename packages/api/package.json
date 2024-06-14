@@ -3,7 +3,10 @@
   "name": "@asafe-digital-test/api",
   "version": "1.0.0",
   "description": "My project for the A-Safe Digital test",
+  "main": "src/server.ts",
+  "type": "module",
   "scripts": {
+    "dev": "tsx watch src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,13 +22,15 @@
     "url": "https://github.com/guerrato/asafe-digital-test/issues"
   },
   "homepage": "https://github.com/guerrato/asafe-digital-test#readme",
+  "dependencies": {
+    "@prisma/client": "^5.15.0",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.28.0"
+  },
   "devDependencies": {
     "@types/node": "^20.14.2",
     "prisma": "^5.15.0",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.15.4",
     "typescript": "^5.4.5"
-  },
-  "dependencies": {
-    "fastify": "^4.28.0"
   }
 }

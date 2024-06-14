@@ -18,7 +18,7 @@ model User {
   name       String
   email      String   @unique
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt()
+  updated_at DateTime @updatedAt
   Post       Post[]
 
   @@map("users")
@@ -30,7 +30,7 @@ model Post {
   content    String
   published  Boolean  @default(false)
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt()
+  updated_at DateTime @updatedAt
   author     User     @relation(fields: [authorId], references: [id])
   authorId   String
 
