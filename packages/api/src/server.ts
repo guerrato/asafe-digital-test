@@ -1,11 +1,12 @@
 import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify'
 import 'dotenv/config'
+import userRoutes from '~/routes/user.route'
 
 const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
 
 const fastify: FastifyInstance = Fastify({ logger: useLogger })
-
-const start = async () => {
+fastify.register(userRoutes)
+export const start = async () => {
   try {
     await fastify.listen({ port: (process.env.PORT as number | undefined) || 3000, ipv6Only: false })
     const address = fastify.server.address()
@@ -23,7 +24,7 @@ const start = async () => {
       } else {
         let addressMessage = `\n\n\x1b[32mServer listening at\x1b[0m\n`
         for (const addr of fastify.addresses()) {
-          addressMessage += `\t - http://${addr.address}:${addr.port}\n`
+          addressMessage += `\t • http://${addr.address}:${addr.port}\n`
         }
 
         console.log(addressMessage)
@@ -34,5 +35,3 @@ const start = async () => {
     process.exit(1)
   }
 }
-
-start()
