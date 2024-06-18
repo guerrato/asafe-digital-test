@@ -1,11 +1,14 @@
-import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify'
+import Fastify, { FastifyInstance } from 'fastify'
 import 'dotenv/config'
 import { userRoutes } from '~/routes'
+import { authRoutes } from '~/routes/auth.route'
 
 const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
 
 const fastify: FastifyInstance = Fastify({ logger: useLogger })
-fastify.register(userRoutes, {prefix: '/users'})
+fastify.register(userRoutes, { prefix: '/users' })
+fastify.register(authRoutes, {prefix: '/auth'})
+
 
 export const start = async () => {
   try {
