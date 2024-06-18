@@ -1,11 +1,12 @@
 import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify'
 import 'dotenv/config'
-import userRoutes from '~/routes/user.route'
+import { userRoutes } from '~/routes'
 
 const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
 
 const fastify: FastifyInstance = Fastify({ logger: useLogger })
-fastify.register(userRoutes)
+fastify.register(userRoutes, {prefix: '/users'})
+
 export const start = async () => {
   try {
     await fastify.listen({ port: (process.env.PORT as number | undefined) || 3000, ipv6Only: false })
