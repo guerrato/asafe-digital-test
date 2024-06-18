@@ -1,18 +1,23 @@
-import { PrismaClient, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import 'reflect-metadata'
-import { autoInjectable, container, inject } from 'tsyringe'
+import { autoInjectable, inject } from 'tsyringe'
+import { UserCreate, UserReply } from '~/models/user.model'
 import { DbContext } from '~/repositories/dbContext'
 
 export interface IUserRepository {
-  findMany(): Promise<User[]>
+  create(data: UserCreate): Promise<UserReply>
 }
 
 @autoInjectable()
 export class UserRepository implements IUserRepository {
   constructor(@inject('DbContext') private readonly dbContext: DbContext) {}
 
-  async findMany() {
-    return (await this.dbContext.prisma.user.findMany()) as User[]
-    // return 'Hello World from UserRepository'
+  async create(data: UserCreate): Promise<UserReply> {
+    try {
+      const { password, picture, ...rest }: User = await this.dbContext.prisma.user.create({ data })
+      return rest
+    } catch (error) {
+      throw error
+    }
   }
 }
