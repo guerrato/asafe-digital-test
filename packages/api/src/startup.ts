@@ -7,19 +7,25 @@ import { DbContext } from '~/repositories/dbContext'
 import { start } from '~/server'
 import { AuthService, IAuthService } from './services/auth.service'
 import { AuthController, IAuthController } from './controllers/auth.controller'
+import { IPostRepository, PostRepository } from './repositories/post.repository'
+import { IPostService, PostService } from './services/post.service'
+import { IPostController, PostController } from './controllers/post.controller'
 
 // Resolve Singletons
 container.registerSingleton('DbContext', DbContext)
 
 // Repositories Injection registrations
 container.register<IUserRepository>('IUserRepository', UserRepository)
+container.register<IPostRepository>('IPostRepository', PostRepository)
 
 // Services Injection registrations
 container.register<IUserService>('IUserService', UserService)
+container.register<IPostService>('IPostService', PostService)
 container.register<IAuthService>('IAuthService', AuthService)
 
 // Controller Injection registrations
 container.register<IUserController>('IUserController', UserController)
+container.register<IPostController>('IPostController', PostController)
 container.register<IAuthController>('IAuthController', AuthController)
 
 // Start the server

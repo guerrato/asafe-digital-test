@@ -2,8 +2,6 @@ import { autoInjectable, inject } from 'tsyringe'
 import { UserInput, UserReply, UserUpdate, UserUpdateRole } from '~/models/user.model'
 import { IUserRepository } from '~/repositories/user.repository'
 import { formatEmail, formatPersonName, isCompleteName, isEmail, isEmpty } from '~/utils/string'
-import { hash } from 'argon2'
-import { Role } from '@prisma/client'
 import { generatePasswordHash } from '~/utils/security'
 
 export interface IUserService {
