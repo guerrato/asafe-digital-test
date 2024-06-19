@@ -1,7 +1,7 @@
 import { autoInjectable, inject } from 'tsyringe'
 import { IUserRepository } from '~/repositories/user.repository'
-import { formatEmail, formatPersonName, isCompleteName, isEmail, isEmpty } from '~/utils/string'
-import { hash, verify } from 'argon2'
+import { formatEmail, isEmail, isEmpty } from '~/utils/string'
+import { verify } from 'argon2'
 import { createToken } from '~/utils/jwt'
 import { AuthLogin } from '~/models/auth.model'
 
@@ -35,7 +35,7 @@ export class AuthService implements IAuthService {
         sub: userDB.id,
         iss: process.env.API_DOMAIN,
         aud: process.env.API_DOMAIN,
-        role: 'writer',
+        role: userDB.role,
       }
 
       return createToken(payload, process.env.JWT_SECRET)

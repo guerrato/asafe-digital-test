@@ -7,6 +7,7 @@ import { hash } from 'argon2'
 export interface IUserService {
   create(user: UserInput): Promise<UserReply>
   update(user: UserUpdate): Promise<UserReply>
+  delete(id: string): Promise<void>
 }
 
 @autoInjectable()
@@ -70,10 +71,23 @@ export class UserService implements IUserService {
       user.password = await hash(user.password, { secret: Buffer.from(process.env.SECRET_KEY) })
     }
 
-    // check if the user exists
-
     return await this.userRepository.update(user)
+  }
 
-    throw new Error('Method not implemented.')
+  async delete(id: string): Promise<void> {
+    try {
+      if (isEmpty(id)) {
+        throw new Error('User not found')
+      }
+
+      const existingUser = await this.userRepository.findById(id)
+      if (!existingUser) {
+        throw new Error('User not found')
+      }
+
+      await this.userRepository.delete(id)
+    } catch (error) {
+      throw error
+    }
   }
 }

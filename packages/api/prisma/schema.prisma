@@ -20,6 +20,7 @@ model User {
   password     String
   picture      String?
   picture_name String?
+  role         Role     @default(WRITER)
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
   Post         Post[]
@@ -39,4 +40,9 @@ model Post {
   authorId   String
 
   @@map("posts")
+}
+
+enum Role {
+  WRITER
+  ADMIN
 }

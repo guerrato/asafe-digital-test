@@ -5,7 +5,7 @@ import httpResponse from '~/utils/httpResponse'
 import { verifyToken } from '~/utils/jwt'
 import { isEmpty } from '~/utils/string'
 
-export const authMiddleware = async <T extends FastifyRequest>(request: T, reply: FastifyReply) => {
+export const roleMiddleware = async <T extends AuthenticatedRequest>(request: T, reply: FastifyReply) => {
   try {
     if (isEmpty(process.env.JWT_SECRET)) {
       throw new Error('MDW_VAR_MISSING: Internal Error: Variables missing')
@@ -27,20 +27,14 @@ export const authMiddleware = async <T extends FastifyRequest>(request: T, reply
       throw new Error('MDW_INVALID_TOKEN: Invalid token')
     }
 
-    const auth = {
-      userId: payload.sub,
-      role: payload.role,
+    const { id } = request.params as T
+
+    if (id !== payload.sub && (payload.role as string).toUpperCase() !== 'ADMIN') {
+      throw new Error('MDW_UNAUTHORIZED: Unauthorized')
     }
 
-    if (isEmpty(request.body)) {
-      request.body = { auth }
-    } else {
-      if (isEmpty((request.body as AuthenticatedRequest).id)) {
-        ;(request.body as AuthenticatedRequest['body']).auth = auth
-      }
-    }
   } catch (error) {
-    console.log('error', error)
     reply.code(401).send(httpResponse({ error: (error as Error).message }))
   }
+
 }

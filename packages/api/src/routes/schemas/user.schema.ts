@@ -1,5 +1,6 @@
 import { UserInput, UserUpdate } from '~/models/user.model'
 import { RouterSchema } from './generic.schema'
+import { FastifyRequest, FastifySchema } from 'fastify'
 
 export const userCreateSchema: RouterSchema<UserInput> = {
   body: {
@@ -22,5 +23,15 @@ export const userUpdateSchema: RouterSchema<UserInput> = {
       email: { type: 'string', format: 'email' },
       password: { type: 'string' },
     },
-  }
+  },
+}
+
+export const userDeleteSchema: FastifySchema = {
+  params: {
+    type: 'object',
+    required: ['id'],
+    properties: {
+      id: { type: 'string' },
+    },
+  },
 }
