@@ -4,6 +4,7 @@ import { formatEmail, isEmail, isEmpty } from '~/utils/string'
 import { verify } from 'argon2'
 import { createToken } from '~/utils/jwt'
 import { AuthLogin } from '~/models/auth.model'
+import { verifyPassword } from '~/utils/security'
 
 export interface IAuthService {
   login(user: AuthLogin): Promise<string>
@@ -28,7 +29,7 @@ export class AuthService implements IAuthService {
       const userDB = await this.userRepository.findByEmail(email)
       if (isEmpty(userDB)) throw new Error('Invalid credentials')
 
-      const isValid = await verify(userDB.password, password, { secret: Buffer.from(process.env.SECRET_KEY) })
+      const isValid = await verifyPassword(userDB.password, password)
       if (!isValid) throw new Error('Invalid credentials')
 
       const payload = {

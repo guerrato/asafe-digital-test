@@ -10,6 +10,7 @@ export interface IUserRepository {
   create(data: UserInput): Promise<UserReply>
   update(user: UserUpdate): Promise<UserReply>
   delete(id: string): Promise<void>
+  list(): Promise<User[]>
 }
 
 @autoInjectable()
@@ -32,7 +33,6 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  
   async create(data: UserInput): Promise<UserReply> {
     try {
       const { password, picture, ...rest }: User = await this.dbContext.prisma.user.create({ data })
@@ -55,6 +55,14 @@ export class UserRepository implements IUserRepository {
   async delete(id: string): Promise<void> {
     try {
       await this.dbContext.prisma.user.delete({ where: { id } })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async list(): Promise<User[]> {
+    try {
+      return await this.dbContext.prisma.user.findMany()
     } catch (error) {
       throw error
     }

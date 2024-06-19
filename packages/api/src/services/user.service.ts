@@ -1,13 +1,18 @@
 import { autoInjectable, inject } from 'tsyringe'
-import { UserInput, UserReply, UserUpdate } from '~/models/user.model'
+import { UserInput, UserReply, UserUpdate, UserUpdateRole } from '~/models/user.model'
 import { IUserRepository } from '~/repositories/user.repository'
 import { formatEmail, formatPersonName, isCompleteName, isEmail, isEmpty } from '~/utils/string'
 import { hash } from 'argon2'
+import { Role } from '@prisma/client'
+import { generatePasswordHash } from '~/utils/security'
 
 export interface IUserService {
   create(user: UserInput): Promise<UserReply>
   update(user: UserUpdate): Promise<UserReply>
+  updateRole(user: UserUpdateRole): Promise<UserReply>
   delete(id: string): Promise<void>
+  list(): Promise<UserReply[]>
+  get(id: string): Promise<UserReply>
 }
 
 @autoInjectable()
@@ -24,7 +29,7 @@ export class UserService implements IUserService {
 
       name = formatPersonName(name)
       email = formatEmail(email)
-      password = await hash(password, { secret: Buffer.from(process.env.SECRET_KEY) })
+      password = await generatePasswordHash(password)
 
       return await this.userRepository.create({ email, name, password })
     } catch (error) {
@@ -65,10 +70,20 @@ export class UserService implements IUserService {
 
     // Validate new user's password if informed
     if (!isEmpty(user.password)) {
-      if (isEmpty(process.env.SECRET_KEY)) {
-        throw new Error('SRV_VAR_MISSING: Internal Error: Variables missing')
-      }
-      user.password = await hash(user.password, { secret: Buffer.from(process.env.SECRET_KEY) })
+      user.password = await generatePasswordHash(user.password)
+    }
+
+    return await this.userRepository.update(user)
+  }
+
+  async updateRole(user: UserUpdateRole): Promise<UserReply> {
+    if (isEmpty(user.id)) {
+      throw new Error('User not found')
+    }
+
+    const existingUser = await this.userRepository.findById(user.id)
+    if (!existingUser) {
+      throw new Error('User not found')
     }
 
     return await this.userRepository.update(user)
@@ -86,6 +101,33 @@ export class UserService implements IUserService {
       }
 
       await this.userRepository.delete(id)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async list(): Promise<UserReply[]> {
+    try {
+      const users = await this.userRepository.list()
+      return users.map(({ password, picture, ...rest }) => rest)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async get(id: string): Promise<UserReply> {
+    try {
+      if (isEmpty(id)) {
+        throw new Error('User not found')
+      }
+
+      const user = await this.userRepository.findById(id)
+      if (!user) {
+        throw new Error('User not found')
+      }
+
+      const { password, picture, ...rest } = user
+      return rest
     } catch (error) {
       throw error
     }
