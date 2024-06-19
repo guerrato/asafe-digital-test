@@ -11,5 +11,5 @@ export type PostListInput = {
   page: number
   limit: number
 }
-export type PostInput = Omit<Prisma.PostCreateInput, 'id' | 'picture' | 'created_at' | 'updated_at' | 'Post'>
-export type PostUpdate = Partial<Omit<Prisma.PostCreateInput, 'picture' | 'created_at' | 'updated_at' | 'Post'>>
+
+export type PostInput = Omit<Prisma.PostUncheckedCreateInput, 'id' | 'title_slug' | 'author_id' | 'created_at' | 'updated_at'>

@@ -1,11 +1,11 @@
 import { autoInjectable, inject } from 'tsyringe'
-import { Post } from '@prisma/client'
+import { Post, Prisma } from '@prisma/client'
 import { DbContext } from '~/repositories/dbContext'
-import { PaginatedPostReply, PostListInput } from '~/models/post.model'
+import { PaginatedPostReply, PostInput, PostListInput } from '~/models/post.model'
 
 export interface IPostRepository {
   listPublished(opts: PostListInput): Promise<PaginatedPostReply>
-  // create(data): Promise<Post>
+  create(post: Prisma.PostUncheckedCreateInput): Promise<Post>
   // update(post): Promise<Post>
   // delete(id: string): Promise<void>
 }
@@ -39,6 +39,16 @@ export class PostRepository implements IPostRepository {
         totalPages: Math.ceil(total / opts.limit),
         limit: opts.limit,
       } as PaginatedPostReply
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async create(post: Prisma.PostUncheckedCreateInput): Promise<Post> {
+    try {
+      return await this.dbContext.post.create({
+        data: post,
+      })
     } catch (error) {
       throw error
     }

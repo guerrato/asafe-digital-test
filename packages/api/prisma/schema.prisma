@@ -36,8 +36,8 @@ model Post {
   published  Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  author     User     @relation(fields: [authorId], references: [id])
-  authorId   String
+  author     User     @relation(fields: [author_id], references: [id])
+  author_id   String
 
   @@map("posts")
 }

@@ -16,7 +16,7 @@ export interface IUserController {
 }
 
 @autoInjectable()
-export class UserController {
+export class UserController implements IUserController {
   constructor(@inject('IUserService') private readonly userService: IUserService) {}
 
   async create(request: FastifyRequest<{ Body: UserInput }>, reply: FastifyReply): Promise<void> {
@@ -55,7 +55,7 @@ export class UserController {
       throw error
     }
   }
-  
+
   async get(request: AuthenticatedRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void> {
     try {
       reply.code(200).send(httpResponse({ data: await this.userService.get(request.params.id) }))
@@ -63,7 +63,7 @@ export class UserController {
       throw error
     }
   }
-  
+
   async list(request: AuthenticatedRequest, reply: FastifyReply): Promise<void> {
     try {
       reply.code(200).send(httpResponse({ data: await this.userService.list() }))
