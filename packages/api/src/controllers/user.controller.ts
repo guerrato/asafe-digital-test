@@ -31,7 +31,7 @@ export class UserController implements IUserController {
   async update(request: AuthenticatedRequest<{ Body: UserUpdate }>, reply: FastifyReply): Promise<void> {
     try {
       const { auth, ...userUpdateData } = request.body
-      userUpdateData.id = request.body.auth.userId
+      userUpdateData.id = request.body.auth.id
       reply.code(200).send(httpResponse({ data: await this.userService.update(userUpdateData) }))
     } catch (error) {
       throw error

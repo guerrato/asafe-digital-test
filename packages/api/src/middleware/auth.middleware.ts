@@ -28,14 +28,14 @@ export const authMiddleware = async <T extends FastifyRequest>(request: T, reply
     }
 
     const auth = {
-      userId: payload.sub,
+      id: payload.sub,
       role: payload.role,
     }
 
     if (isEmpty(request.body)) {
       request.body = { auth }
     } else {
-      if (isEmpty((request.body as AuthenticatedRequest).id)) {
+      if (isEmpty((request.body as AuthenticatedRequest['body']).auth)) {
         ;(request.body as AuthenticatedRequest['body']).auth = auth
       }
     }

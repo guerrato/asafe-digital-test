@@ -1,13 +1,14 @@
 import { autoInjectable, inject } from 'tsyringe'
 import { Post, Prisma } from '@prisma/client'
 import { DbContext } from '~/repositories/dbContext'
-import { PaginatedPostReply, PostInput, PostListInput } from '~/models/post.model'
+import { PaginatedPostReply, PostListInput, PostUpdate } from '~/models/post.model'
 
 export interface IPostRepository {
   listPublished(opts: PostListInput): Promise<PaginatedPostReply>
   create(post: Prisma.PostUncheckedCreateInput): Promise<Post>
-  // update(post): Promise<Post>
-  // delete(id: string): Promise<void>
+  findById(id: string): Promise<Post | null>
+  update(post: PostUpdate): Promise<Post>
+  delete(id: string): Promise<void>
 }
 
 @autoInjectable()
@@ -48,6 +49,39 @@ export class PostRepository implements IPostRepository {
     try {
       return await this.dbContext.post.create({
         data: post,
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async update(post: PostUpdate): Promise<Post> {
+    try {
+      const { id, ...data } = post
+
+      return await this.dbContext.prisma.post.update({
+        where: { id },
+        data,
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async findById(id: string): Promise<Post | null> {
+    try {
+      return await this.dbContext.prisma.post.findUnique({
+        where: { id },
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async delete(id: string): Promise<void> {
+    try {
+      await this.dbContext.prisma.post.delete({
+        where: { id },
       })
     } catch (error) {
       throw error

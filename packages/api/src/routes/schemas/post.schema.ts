@@ -1,5 +1,5 @@
 import { FastifySchema } from 'fastify'
-import { PostInput } from '~/models/post.model'
+import { PostInput, PostUpdate } from '~/models/post.model'
 import { RouterSchema } from './generic.schema'
 
 export const postListSchema: FastifySchema = {
@@ -21,6 +21,29 @@ export const postCreateSchema: RouterSchema<PostInput> = {
       title: { type: 'string' },
       content: { type: 'string' },
       published: { type: 'boolean' },
+    },
+  },
+}
+
+export const postUpdateSchema: RouterSchema<PostUpdate> = {
+  body: {
+    type: 'object',
+    required: ['id'],
+    properties: {
+      id: { type: 'string' },
+      title: { type: 'string' },
+      content: { type: 'string' },
+      published: { type: 'boolean' },
+    },
+  },
+}
+
+export const postGetDeleteSchema: FastifySchema = {
+  params: {
+    type: 'object',
+    required: ['id'],
+    properties: {
+      id: { type: 'string' },
     },
   },
 }

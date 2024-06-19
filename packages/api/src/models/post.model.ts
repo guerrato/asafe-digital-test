@@ -12,4 +12,11 @@ export type PostListInput = {
   limit: number
 }
 
-export type PostInput = Omit<Prisma.PostUncheckedCreateInput, 'id' | 'title_slug' | 'author_id' | 'created_at' | 'updated_at'>
+export type PostInput = Omit<
+  Prisma.PostUncheckedCreateInput,
+  'id' | 'title_slug' | 'author_id' | 'created_at' | 'updated_at'
+>
+export type PostUpdate = Omit<
+  Prisma.PostUncheckedCreateInput,
+  'title_slug' | 'author_id' | 'created_at' | 'updated_at'
+>

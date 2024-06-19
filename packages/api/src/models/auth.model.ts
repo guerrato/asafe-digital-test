@@ -15,6 +15,8 @@ import { FastifyRequestType, ResolveFastifyRequestType } from 'fastify/types/typ
 
 export type AuthLogin = Pick<User, 'email' | 'password'>
 
+export type AuthPayload = { id: string; role: Role }
+
 // export type AuthenticatedRequest<T extends FastifyRequest> = FastifyRequest & T & { Body: { auth: { userId: string; role: Role } } }
 export interface AuthenticatedRequest<
   RouteGeneric extends RouteGenericInterface = RouteGenericInterface,
@@ -44,5 +46,5 @@ export interface AuthenticatedRequest<
     ContextConfig,
     Logger,
     RequestType
-  >['body'] & { auth: { userId: string; role: Role } }
+  >['body'] & { auth: AuthPayload }
 }
