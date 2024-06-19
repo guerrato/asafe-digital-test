@@ -12,9 +12,9 @@ export interface IPostService {
   listPublished(opts: PostListInput): Promise<PaginatedPostReply>
   // listByUser(userId: string, page: number, limit: number): Promise<PostReply[]>
   create(post: PostCreateService): Promise<Post>
-  // get(id: string): Promise<PostReply>
   update(post: PostUpdate, userId: string): Promise<Post>
   delete(id: string, auth: AuthPayload): Promise<void>
+  get(id: string, auth?: AuthPayload): Promise<Post>
 }
 
 @autoInjectable()
@@ -79,6 +79,23 @@ export class PostService implements IPostService {
       }
 
       await this.postRepository.delete(id)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async get(id: string, auth?: AuthPayload): Promise<Post> {
+    try {
+      const post = await this.postRepository.findById(id)
+      if (!post) {
+        throw new Error('Post not found')
+      }
+
+      if(post.published === false && auth?.role !== Role.ADMIN && post.author_id !== auth?.id) {
+        throw new Error('SRV_UNAUTHORIZED: Unauthorized')
+      }
+
+      return post
     } catch (error) {
       throw error
     }

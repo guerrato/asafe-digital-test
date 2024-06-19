@@ -1,7 +1,4 @@
-import {
-  FastifyReply,
-  FastifyRequest,
-} from 'fastify'
+import { FastifyReply, FastifyRequest } from 'fastify'
 import { autoInjectable, inject } from 'tsyringe'
 import { AuthenticatedRequest } from '~/models/auth.model'
 import { PostInput, PostListInput, PostUpdate } from '~/models/post.model'
@@ -14,7 +11,7 @@ export interface IPostController {
   update(request: AuthenticatedRequest<{ Body: PostUpdate }>, reply: FastifyReply): Promise<void>
   // updateRole(request: AuthenticatedRequest<{ Body: PostInput }>, reply: FastifyReply): Promise<void>
   delete(request: AuthenticatedRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void>
-  // get(request: AuthenticatedRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void>
+  get(request: AuthenticatedRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void>
   // list(request: AuthenticatedRequest, reply: FastifyReply): Promise<void>
 }
 
@@ -43,7 +40,7 @@ export class PostController implements IPostController {
 
   async update(request: AuthenticatedRequest<{ Body: PostUpdate }>, reply: FastifyReply): Promise<void> {
     try {
-      const {auth, ...data} = request.body
+      const { auth, ...data } = request.body
       const posts = await this.postService.update(data, auth.id)
       reply.code(200).send(httpResponse({ data: posts }))
     } catch (error) {
@@ -60,5 +57,16 @@ export class PostController implements IPostController {
     }
   }
 
-
+  async get(
+    request: AuthenticatedRequest<{ Params: { id: string } }> | FastifyRequest<{ Params: { id: string } }>,
+    reply: FastifyReply
+  ): Promise<void> {
+    try {
+      const { auth } = (request.body as any) || {}
+      const post = await this.postService.get(request.params.id, auth)
+      reply.code(200).send(httpResponse({ data: post }))
+    } catch (error) {
+      reply.send({ error: (error as Error).message })
+    }
+  }
 }
