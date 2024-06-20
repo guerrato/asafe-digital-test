@@ -10,16 +10,17 @@ type PostCreateService = PostInput & { author_id: string }
 export interface IPostService {
   // list(userId: string, page: number, limit: number, published?: boolean): Promise<Post[]>
   listPublished(opts: PostListInput): Promise<PaginatedPostReply>
-  // listByUser(userId: string, page: number, limit: number): Promise<PostReply[]>
   create(post: PostCreateService): Promise<Post>
   update(post: PostUpdate, userId: string): Promise<Post>
   delete(id: string, auth: AuthPayload): Promise<void>
   get(id: string, auth?: AuthPayload): Promise<Post>
+  react(id: string, reaction: 'like' | 'dislike'): Promise<number>
 }
 
 @autoInjectable()
 export class PostService implements IPostService {
   constructor(@inject('IPostRepository') private readonly postRepository: IPostRepository) {}
+
   async listPublished(opts: PostListInput): Promise<PaginatedPostReply> {
     try {
       return await this.postRepository.listPublished(opts)
@@ -91,11 +92,19 @@ export class PostService implements IPostService {
         throw new Error('Post not found')
       }
 
-      if(post.published === false && auth?.role !== Role.ADMIN && post.author_id !== auth?.id) {
+      if (post.published === false && auth?.role !== Role.ADMIN && post.author_id !== auth?.id) {
         throw new Error('SRV_UNAUTHORIZED: Unauthorized')
       }
 
       return post
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async react(id: string, reaction: 'like' | 'dislike'): Promise<number> {
+    try {
+      return await this.postRepository.react(id, reaction)
     } catch (error) {
       throw error
     }

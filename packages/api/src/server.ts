@@ -1,19 +1,27 @@
 import Fastify, { FastifyInstance } from 'fastify'
 import 'dotenv/config'
 
-import { userRoutes } from '~/routes'
-import { authRoutes } from '~/routes/auth.route'
-import { postRoutes } from './routes/post.route'
+import { fastifyMultipart } from '@fastify/multipart'
+import fastifyWebsocket from '@fastify/websocket'
+import { authRoutes, postRoutes, userRoutes } from '~/routes'
+import { websocket } from '~/websocket'
+
+// import { websocketRoutes } from '~/websocket'
 
 const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
 
 const fastify: FastifyInstance = Fastify({ logger: useLogger })
 
-const opts = {
+const multipartOpts = {
   attachFieldsToBody: true,
   sharedSchemaId: '#userPictureSchema',
 }
-fastify.register(import('@fastify/multipart'), opts)
+
+fastify.register(fastifyMultipart, multipartOpts)
+fastify.register(fastifyWebsocket)
+websocket(fastify)
+
+// fastify.register(websocketRoutes)
 fastify.register(userRoutes, { prefix: '/users' })
 fastify.register(authRoutes, { prefix: '/auth' })
 fastify.register(postRoutes, { prefix: '/posts' })

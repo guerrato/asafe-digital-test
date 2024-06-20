@@ -34,6 +34,7 @@ model Post {
   title_slug String
   content    String
   published  Boolean  @default(false)
+  likes      Int      @default(0)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   author     User     @relation(fields: [author_id], references: [id])

@@ -9,10 +9,8 @@ export interface IPostController {
   listPublished(request: FastifyRequest<{ Querystring: PostListInput }>, reply: FastifyReply): Promise<void>
   create(request: AuthenticatedRequest<{ Body: PostInput }>, reply: FastifyReply): Promise<void>
   update(request: AuthenticatedRequest<{ Body: PostUpdate }>, reply: FastifyReply): Promise<void>
-  // updateRole(request: AuthenticatedRequest<{ Body: PostInput }>, reply: FastifyReply): Promise<void>
   delete(request: AuthenticatedRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void>
   get(request: AuthenticatedRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void>
-  // list(request: AuthenticatedRequest, reply: FastifyReply): Promise<void>
 }
 
 @autoInjectable()

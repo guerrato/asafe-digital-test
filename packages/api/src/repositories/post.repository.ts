@@ -9,6 +9,7 @@ export interface IPostRepository {
   findById(id: string): Promise<Post | null>
   update(post: PostUpdate): Promise<Post>
   delete(id: string): Promise<void>
+  react(id: string, reaction: 'like' | 'dislike'): Promise<number>
 }
 
 @autoInjectable()
@@ -83,6 +84,22 @@ export class PostRepository implements IPostRepository {
       await this.dbContext.prisma.post.delete({
         where: { id },
       })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async react(id: string, reaction: 'like' | 'dislike'): Promise<number> {
+    const reactionType = reaction === 'like' ? { increment: 1 } : { decrement: 1 }
+    try {
+      const { likes } = await this.dbContext.prisma.post.update({
+        where: { id },
+        data: {
+          likes: reactionType,
+        },
+      })
+
+      return likes
     } catch (error) {
       throw error
     }
