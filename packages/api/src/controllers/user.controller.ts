@@ -13,6 +13,7 @@ export interface IUserController {
   delete(request: AuthenticatedRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void>
   get(request: AuthenticatedRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void>
   list(request: AuthenticatedRequest, reply: FastifyReply): Promise<void>
+  uploadPicture(request: AuthenticatedRequest, reply: FastifyReply): Promise<void>
 }
 
 @autoInjectable()
@@ -64,9 +65,22 @@ export class UserController implements IUserController {
     }
   }
 
-  async list(request: AuthenticatedRequest, reply: FastifyReply): Promise<void> {
+  async list(_: AuthenticatedRequest, reply: FastifyReply): Promise<void> {
     try {
       reply.code(200).send(httpResponse({ data: await this.userService.list() }))
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async uploadPicture(
+    request: AuthenticatedRequest<{ Body: { form_data: any } }>,
+    reply: FastifyReply
+  ): Promise<void> {
+    try {
+      const { form_data }: { form_data: any } = request.body
+
+      reply.code(200).send(httpResponse({ data: await this.userService.pictureUpload(request.body.auth.id, form_data) }))
     } catch (error) {
       throw error
     }

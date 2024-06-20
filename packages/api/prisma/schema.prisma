@@ -18,7 +18,7 @@ model User {
   name         String
   email        String   @unique
   password     String
-  picture      String?
+  picture_path String?
   picture_name String?
   role         Role     @default(WRITER)
   created_at   DateTime @default(now())
@@ -37,7 +37,7 @@ model Post {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   author     User     @relation(fields: [author_id], references: [id])
-  author_id   String
+  author_id  String
 
   @@map("posts")
 }

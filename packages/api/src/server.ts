@@ -1,5 +1,6 @@
 import Fastify, { FastifyInstance } from 'fastify'
 import 'dotenv/config'
+
 import { userRoutes } from '~/routes'
 import { authRoutes } from '~/routes/auth.route'
 import { postRoutes } from './routes/post.route'
@@ -7,10 +8,15 @@ import { postRoutes } from './routes/post.route'
 const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
 
 const fastify: FastifyInstance = Fastify({ logger: useLogger })
-fastify.register(userRoutes, { prefix: '/users' })
-fastify.register(authRoutes, {prefix: '/auth'})
-fastify.register(postRoutes, {prefix: '/posts'})
 
+const opts = {
+  attachFieldsToBody: true,
+  sharedSchemaId: '#userPictureSchema',
+}
+fastify.register(import('@fastify/multipart'), opts)
+fastify.register(userRoutes, { prefix: '/users' })
+fastify.register(authRoutes, { prefix: '/auth' })
+fastify.register(postRoutes, { prefix: '/posts' })
 
 export const start = async () => {
   try {

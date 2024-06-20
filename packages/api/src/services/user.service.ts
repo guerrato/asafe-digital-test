@@ -1,8 +1,9 @@
 import { autoInjectable, inject } from 'tsyringe'
-import { UserInput, UserReply, UserUpdate, UserUpdateRole } from '~/models/user.model'
+import { UserInput, UserPictureUpdate, UserReply, UserUpdate, UserUpdateRole } from '~/models/user.model'
 import { IUserRepository } from '~/repositories/user.repository'
 import { formatEmail, formatPersonName, isCompleteName, isEmail, isEmpty } from '~/utils/string'
 import { generatePasswordHash } from '~/utils/security'
+import { saveFile, uploadFile } from '~/utils/files'
 
 export interface IUserService {
   create(user: UserInput): Promise<UserReply>
@@ -11,6 +12,7 @@ export interface IUserService {
   delete(id: string): Promise<void>
   list(): Promise<UserReply[]>
   get(id: string): Promise<UserReply>
+  pictureUpload(id: string, picture: any): Promise<UserReply>
 }
 
 @autoInjectable()
@@ -107,7 +109,7 @@ export class UserService implements IUserService {
   async list(): Promise<UserReply[]> {
     try {
       const users = await this.userRepository.list()
-      return users.map(({ password, picture, ...rest }) => rest)
+      return users.map(({ password, ...rest }) => rest)
     } catch (error) {
       throw error
     }
@@ -124,8 +126,34 @@ export class UserService implements IUserService {
         throw new Error('User not found')
       }
 
-      const { password, picture, ...rest } = user
+      const { password, ...rest } = user
       return rest
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async pictureUpload(id: string, formData: any): Promise<UserReply> {
+    try {
+      if (isEmpty(id)) {
+        throw new Error('User not found')
+      }
+
+      const user = await this.userRepository.findById(id)
+      if (!user) {
+        throw new Error('User not found')
+      }
+
+      // const fileArray = await (formData.file as File).buffer
+      const buffer = await formData.toBuffer()
+
+      const uploadedFilePath = await uploadFile(buffer)
+
+      return await this.userRepository.update({
+        id,
+        picture_name: formData.filename,
+        picture_path: uploadedFilePath.files.path,
+      } as UserPictureUpdate)
     } catch (error) {
       throw error
     }

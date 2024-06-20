@@ -1,7 +1,7 @@
 import { User } from '@prisma/client'
 import 'reflect-metadata'
 import { autoInjectable, inject } from 'tsyringe'
-import { UserInput, UserReply, UserUpdate } from '~/models/user.model'
+import { UserInput, UserPictureUpdate, UserReply, UserUpdate } from '~/models/user.model'
 import { DbContext } from '~/repositories/dbContext'
 
 export interface IUserRepository {
@@ -35,17 +35,17 @@ export class UserRepository implements IUserRepository {
 
   async create(data: UserInput): Promise<UserReply> {
     try {
-      const { password, picture, ...rest }: User = await this.dbContext.prisma.user.create({ data })
+      const { password, ...rest }: User = await this.dbContext.prisma.user.create({ data })
       return rest
     } catch (error) {
       throw error
     }
   }
 
-  async update(user: UserUpdate): Promise<UserReply> {
+  async update(user: UserUpdate | UserPictureUpdate): Promise<UserReply> {
     try {
       const { id, ...data } = user
-      const { password, picture, ...rest }: User = await this.dbContext.prisma.user.update({ where: { id }, data })
+      const { password, ...rest }: User = await this.dbContext.prisma.user.update({ where: { id }, data })
       return rest
     } catch (error) {
       throw error
