@@ -1,11 +1,11 @@
 import 'reflect-metadata'
 import { FastifyInstance, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
-import { PostController } from '~/controllers/post.controller'
+import { PostController } from '../controllers/post.controller'
 import { postCreateSchema, postGetDeleteSchema, postListSchema, postUpdateSchema } from './schemas/post.schema'
-import { PostInput, PostListInput, PostUpdate } from '~/models/post.model'
-import { authMiddleware } from '~/middleware/auth.middleware'
-import { AuthenticatedRequest } from '~/models/auth.model'
+import { PostInput, PostListInput, PostUpdate } from '../models/post.model'
+import { authMiddleware } from '../middleware/auth.middleware'
+import { AuthenticatedRequest } from '../models/auth.model'
 
 export const postRoutes = async (fastify: FastifyInstance, _: any) => {
   const postController = container.resolve(PostController)

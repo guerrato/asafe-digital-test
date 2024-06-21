@@ -3,11 +3,14 @@ import 'dotenv/config'
 import { fastifyMultipart } from '@fastify/multipart'
 import fastifyWebsocket from '@fastify/websocket'
 import cors from '@fastify/cors'
-import { authRoutes, indexRoutes, postRoutes, userRoutes } from '~/routes'
-import { websocket } from '~/websocket'
-import { swaggerLoader } from '~/swagger'
+import { authRoutes, indexRoutes, postRoutes, userRoutes } from './routes'
+import { websocket } from './websocket'
+import { swaggerLoader } from './swagger'
+import { bootstrap } from './startup'
 
 export const start = async () => {
+  bootstrap()
+
   const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
   const fastify: FastifyInstance = Fastify({ logger: useLogger })
   try {
@@ -53,6 +56,7 @@ export const start = async () => {
     return fastify
   } catch (err) {
     fastify.log.error(err)
+    console.log(err)
     process.exit(1)
   }
 }

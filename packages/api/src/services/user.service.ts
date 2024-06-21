@@ -1,9 +1,9 @@
 import { autoInjectable, inject } from 'tsyringe'
-import { UserInput, UserPictureUpdate, UserReply, UserUpdate, UserUpdateRole } from '~/models/user.model'
-import { IUserRepository } from '~/repositories/user.repository'
-import { formatEmail, formatPersonName, isCompleteName, isEmail, isEmpty } from '~/utils/string'
-import { generatePasswordHash } from '~/utils/security'
-import { saveFile, uploadFile } from '~/utils/files'
+import { UserInput, UserPictureUpdate, UserReply, UserUpdate, UserUpdateRole } from '../models/user.model'
+import { IUserRepository } from '../repositories/user.repository'
+import { formatEmail, formatPersonName, isCompleteName, isEmail, isEmpty } from '../utils/string'
+import { generatePasswordHash } from '../utils/security'
+import { saveFile, uploadFile } from '../utils/files'
 
 export interface IUserService {
   create(user: UserInput): Promise<UserReply>

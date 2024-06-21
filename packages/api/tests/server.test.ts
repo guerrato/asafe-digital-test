@@ -1,17 +1,24 @@
-import { test } from 'tap'
+import request from 'supertest'
 import { start } from '../src/server'
+import { FastifyInstance } from 'fastify'
+import { bootstrap } from '../src/startup'
 
-test('Should return "OK" on /health route', async (t) => {
-  const fastify = await start()
+describe('GET /health', () => {
+  let fastify: FastifyInstance
 
-  t.teardown(() => fastify.close())
-
-  const response = await fastify.inject({
-    method: 'GET',
-    url: '/health',
+  beforeAll(async () => {
+    bootstrap()
+    fastify = await start()
   })
-  console.log(response)
 
-  t.equal(response.statusCode, 200)
-  t.equal(response.json(), {status: 'OK'})
+  afterAll(() => {
+    fastify.close()
+  })
+
+  test('should return "OK" on /health route', async () => {
+    const response = await request(fastify.server).get('/health')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual({ status: 'OK' })
+  })
 })

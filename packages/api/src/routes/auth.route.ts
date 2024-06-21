@@ -1,8 +1,8 @@
 import 'reflect-metadata'
 import { FastifyInstance, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
-import { AuthController } from '~/controllers/auth.controller'
-import { AuthLogin } from '~/models/auth.model'
+import { AuthController } from '../controllers/auth.controller'
+import { AuthLogin } from '../models/auth.model'
 import { authLoginSchema } from './schemas/auth.schema'
 
 export const authRoutes = async (fastify: FastifyInstance, _: any, done: Function) => {

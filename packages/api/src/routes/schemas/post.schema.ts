@@ -1,5 +1,5 @@
 import { FastifySchema } from 'fastify'
-import { PostInput, PostUpdate } from '~/models/post.model'
+import { PostInput, PostUpdate } from '../../models/post.model'
 import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const postListSchema: FastifySchema = {

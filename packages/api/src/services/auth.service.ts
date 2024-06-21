@@ -1,10 +1,10 @@
 import { autoInjectable, inject } from 'tsyringe'
-import { IUserRepository } from '~/repositories/user.repository'
-import { formatEmail, isEmail, isEmpty } from '~/utils/string'
+import { IUserRepository } from '../repositories/user.repository'
+import { formatEmail, isEmail, isEmpty } from '../utils/string'
 import { verify } from 'argon2'
-import { createToken } from '~/utils/jwt'
-import { AuthLogin } from '~/models/auth.model'
-import { verifyPassword } from '~/utils/security'
+import { createToken } from '../utils/jwt'
+import { AuthLogin } from '../models/auth.model'
+import { verifyPassword } from '../utils/security'
 
 export interface IAuthService {
   login(user: AuthLogin): Promise<string>

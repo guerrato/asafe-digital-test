@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { autoInjectable, inject } from 'tsyringe'
-import { AuthenticatedRequest } from '~/models/auth.model'
-import { PostInput, PostListInput, PostUpdate } from '~/models/post.model'
-import { IPostService } from '~/services/post.service'
-import httpResponse from '~/utils/httpResponse'
+import { AuthenticatedRequest } from '../models/auth.model'
+import { PostInput, PostListInput, PostUpdate } from '../models/post.model'
+import { IPostService } from '../services/post.service'
+import httpResponse from '../utils/httpResponse'
 
 export interface IPostController {
   listPublished(request: FastifyRequest<{ Querystring: PostListInput }>, reply: FastifyReply): Promise<void>

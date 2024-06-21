@@ -1,8 +1,8 @@
 import { User } from '@prisma/client'
 import 'reflect-metadata'
 import { autoInjectable, inject } from 'tsyringe'
-import { UserInput, UserPictureUpdate, UserReply, UserUpdate } from '~/models/user.model'
-import { DbContext } from '~/repositories/dbContext'
+import { UserInput, UserPictureUpdate, UserReply, UserUpdate } from '../models/user.model'
+import { DbContext } from '../repositories/dbContext'
 
 export interface IUserRepository {
   findById(id: string): Promise<User | null>

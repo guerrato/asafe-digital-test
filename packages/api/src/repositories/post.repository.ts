@@ -1,7 +1,7 @@
 import { autoInjectable, inject } from 'tsyringe'
 import { Post, Prisma } from '@prisma/client'
-import { DbContext } from '~/repositories/dbContext'
-import { PaginatedPostReply, PostListInput, PostUpdate } from '~/models/post.model'
+import { DbContext } from '../repositories/dbContext'
+import { PaginatedPostReply, PostListInput, PostUpdate } from '../models/post.model'
 
 export interface IPostRepository {
   listPublished(opts: PostListInput): Promise<PaginatedPostReply>

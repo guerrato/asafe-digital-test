@@ -1,5 +1,5 @@
 
-import { AuthLogin } from '~/models/auth.model'
+import { AuthLogin } from '../../models/auth.model'
 import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const authLoginSchema: RouterSchema<AuthLogin> = {

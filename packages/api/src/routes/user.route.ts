@@ -1,18 +1,18 @@
 import 'reflect-metadata'
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
-import { UserController } from '~/controllers/user.controller'
+import { UserController } from '../controllers/user.controller'
 import {
   userCreateSchema,
   userGetDeleteSchema,
   userUpdateRoleSchema,
   userUpdateSchema,
-} from '~/routes/schemas/user.schema'
-import { UserInput, UserUpdate, UserUpdateRole } from '~/models/user.model'
-import { authMiddleware } from '~/middleware/auth.middleware'
-import { roleMiddleware } from '~/middleware/role.middleware'
-import { AuthenticatedRequest } from '~/models/auth.model'
-import { adminOnlyMiddleware } from '~/middleware/adminOnly.middleware'
+} from './schemas/user.schema'
+import { UserInput, UserUpdate, UserUpdateRole } from '../models/user.model'
+import { authMiddleware } from '../middleware/auth.middleware'
+import { roleMiddleware } from '../middleware/role.middleware'
+import { AuthenticatedRequest } from '../models/auth.model'
+import { adminOnlyMiddleware } from '../middleware/adminOnly.middleware'
 import { getReponseSchema } from './schemas/generic.schema'
 
 export const userRoutes = async (fastify: FastifyInstance, _: any, done: Function) => {

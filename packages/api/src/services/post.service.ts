@@ -1,9 +1,9 @@
 import { autoInjectable, inject } from 'tsyringe'
 import { Post, Prisma, Role } from '@prisma/client'
-import { IPostRepository } from '~/repositories/post.repository'
-import { PaginatedPostReply, PostInput, PostListInput, PostUpdate } from '~/models/post.model'
-import { isEmpty } from '~/utils/string'
-import { AuthPayload } from '~/models/auth.model'
+import { IPostRepository } from '../repositories/post.repository'
+import { PaginatedPostReply, PostInput, PostListInput, PostUpdate } from '../models/post.model'
+import { isEmpty } from '../utils/string'
+import { AuthPayload } from '../models/auth.model'
 
 type PostCreateService = PostInput & { author_id: string }
 

@@ -1,5 +1,5 @@
 import { FastifySchema } from 'fastify'
-import { UserInput, UserUpdateRole } from '~/models/user.model'
+import { UserInput, UserUpdateRole } from '../../models/user.model'
 import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const userCreateSchema: RouterSchema<UserInput> = {
