@@ -1,4 +1,4 @@
-import { isEmpty } from "./string"
+import { isEmpty } from './string'
 
 export type HTTPResponse<T> = {
   success: boolean

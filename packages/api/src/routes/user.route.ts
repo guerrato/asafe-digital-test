@@ -2,12 +2,7 @@ import 'reflect-metadata'
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
 import { UserController } from '../controllers/user.controller'
-import {
-  userCreateSchema,
-  userGetDeleteSchema,
-  userUpdateRoleSchema,
-  userUpdateSchema,
-} from './schemas/user.schema'
+import { userCreateSchema, userGetDeleteSchema, userUpdateRoleSchema, userUpdateSchema } from './schemas/user.schema'
 import { UserInput, UserUpdate, UserUpdateRole } from '../models/user.model'
 import { authMiddleware } from '../middleware/auth.middleware'
 import { roleMiddleware } from '../middleware/role.middleware'
@@ -76,7 +71,7 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
     schema: {
       security: [{ bearerAuth: [] }],
       tags: ['users'],
-      response: getReponseSchema('userList')
+      response: getReponseSchema('userList'),
     },
     preHandler: async (request: FastifyRequest, reply) => {
       await authMiddleware(request, reply)
@@ -100,7 +95,7 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
             form_data: { type: 'string', format: 'binary' },
           },
         },
-        response: getReponseSchema('user')
+        response: getReponseSchema('user'),
       },
       preHandler: async (request: FastifyRequest<{ Body: { form_data: any } }>, reply) =>
         await authMiddleware<FastifyRequest<{ Body: { form_data: any } }>>(request, reply),

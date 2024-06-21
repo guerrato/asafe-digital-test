@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { singleton } from 'tsyringe'
 
 @singleton()
-export class DbContext extends PrismaClient{
+export class DbContext extends PrismaClient {
   public readonly prisma: PrismaClient
   constructor() {
     super()

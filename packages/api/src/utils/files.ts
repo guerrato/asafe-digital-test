@@ -8,7 +8,7 @@ export const saveFile = (file: ArrayBuffer, destinationPath: string): Promise<vo
     const buffer = Buffer.from(file)
 
     // Write buffer to the destination path
-    fs.writeFile(destinationPath, buffer, (err) => {
+    fs.writeFile(destinationPath, buffer, err => {
       if (err) {
         reject(err)
       } else {

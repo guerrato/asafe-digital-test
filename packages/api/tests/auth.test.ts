@@ -16,7 +16,7 @@ import request from 'supertest'
 
 jest.mock('../src/services/auth.service', () => ({
   AuthService: jest.fn().mockImplementation(() => ({
-    login: jest.fn().mockImplementation((credentials) => {
+    login: jest.fn().mockImplementation(credentials => {
       if (credentials.email === 'test@example.com' && credentials.password === 'test') {
         return Promise.resolve('fakeToken')
       } else {

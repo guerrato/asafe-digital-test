@@ -26,7 +26,7 @@ export const getReponseSchema = (type: 'user' | 'userList' | 'auth' | 'post' | '
     },
     '4xx': {
       properties: {
-        success: { type: 'boolean', default: false},
+        success: { type: 'boolean', default: false },
         message: { type: 'string' },
         data: { default: null },
         error: { type: 'string' },
@@ -34,7 +34,7 @@ export const getReponseSchema = (type: 'user' | 'userList' | 'auth' | 'post' | '
     },
     '5xx': {
       properties: {
-        success: { type: 'boolean', default: false},
+        success: { type: 'boolean', default: false },
         message: { type: 'string' },
         data: { default: null },
         error: { type: 'string' },

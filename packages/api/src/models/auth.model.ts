@@ -26,7 +26,7 @@ export interface AuthenticatedRequest<
   TypeProvider extends FastifyTypeProvider = FastifyTypeProviderDefault,
   ContextConfig = ContextConfigDefault,
   Logger extends FastifyBaseLogger = FastifyBaseLogger,
-  RequestType extends FastifyRequestType = ResolveFastifyRequestType<TypeProvider, SchemaCompiler, RouteGeneric>
+  RequestType extends FastifyRequestType = ResolveFastifyRequestType<TypeProvider, SchemaCompiler, RouteGeneric>,
 > extends FastifyRequest<
     RouteGeneric,
     RawServer,

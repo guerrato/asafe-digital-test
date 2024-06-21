@@ -32,9 +32,7 @@ export const roleMiddleware = async <T extends AuthenticatedRequest>(request: T,
     if (id !== payload.sub && (payload.role as string).toUpperCase() !== 'ADMIN') {
       throw new Error('MDW_UNAUTHORIZED: Unauthorized')
     }
-
   } catch (error) {
     reply.code(401).send(httpResponse({ error: (error as Error).message }))
   }
-
 }

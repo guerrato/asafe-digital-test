@@ -7,6 +7,8 @@
   },
   "description": "My project for the A-Safe Digital test",
   "scripts": {
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md}' --config ./.prettierrc",
+    "format:check": "prettier --check './**/*.{js,jsx,ts,tsx,css,md}' --config ./.prettierrc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
@@ -27,6 +29,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "husky": "^9.0.11"
+    "husky": "^9.0.11",
+    "prettier": "3.3.2"
   }
 }
