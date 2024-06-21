@@ -14,7 +14,7 @@ describe('GET /health', () => {
   })
 
   test('should return "OK" on /health route', async () => {
-    const response = await request((fastify as FastifyInstance).server).get('/health')
+    const response = await request(fastify.server).get('/health')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({ status: 'OK' })
