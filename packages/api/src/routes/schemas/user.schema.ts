@@ -1,8 +1,9 @@
-import { UserInput, UserUpdateRole } from '~/models/user.model'
-import { RouterSchema } from './generic.schema'
 import { FastifySchema } from 'fastify'
+import { UserInput, UserUpdateRole } from '~/models/user.model'
+import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const userCreateSchema: RouterSchema<UserInput> = {
+  tags: ['users'],
   body: {
     type: 'object',
     required: ['name', 'email', 'password'],
@@ -12,9 +13,12 @@ export const userCreateSchema: RouterSchema<UserInput> = {
       password: { type: 'string' },
     },
   },
+  response: getReponseSchema('user'),
 }
 
 export const userUpdateSchema: RouterSchema<UserInput> = {
+  tags: ['users'],
+  security: [{ bearerAuth: [] }],
   body: {
     type: 'object',
     required: [],
@@ -24,9 +28,12 @@ export const userUpdateSchema: RouterSchema<UserInput> = {
       password: { type: 'string' },
     },
   },
+  response: getReponseSchema('user'),
 }
 
 export const userUpdateRoleSchema: RouterSchema<UserUpdateRole> = {
+  tags: ['users'],
+  security: [{ bearerAuth: [] }],
   body: {
     type: 'object',
     required: ['id', 'role'],
@@ -35,9 +42,12 @@ export const userUpdateRoleSchema: RouterSchema<UserUpdateRole> = {
       role: { type: 'string' },
     },
   },
+  response: getReponseSchema('user'),
 }
 
 export const userGetDeleteSchema: FastifySchema = {
+  tags: ['users'],
+  security: [{ bearerAuth: [] }],
   params: {
     type: 'object',
     required: ['id'],
@@ -45,4 +55,5 @@ export const userGetDeleteSchema: FastifySchema = {
       id: { type: 'string' },
     },
   },
+  response: getReponseSchema('user'),
 }

@@ -1,8 +1,9 @@
 
 import { AuthLogin } from '~/models/auth.model'
-import { RouterSchema } from './generic.schema'
+import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const authLoginSchema: RouterSchema<AuthLogin> = {
+  tags: ['auth'],
   body: {
     type: 'object',
     required: ['email', 'password'],
@@ -11,4 +12,5 @@ export const authLoginSchema: RouterSchema<AuthLogin> = {
       password: { type: 'string' },
     },
   },
+  response: getReponseSchema('auth')
 }

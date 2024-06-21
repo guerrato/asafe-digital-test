@@ -1,8 +1,9 @@
 import { FastifySchema } from 'fastify'
 import { PostInput, PostUpdate } from '~/models/post.model'
-import { RouterSchema } from './generic.schema'
+import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const postListSchema: FastifySchema = {
+  tags: ['posts'],
   querystring: {
     type: 'object',
     required: ['limit', 'page'],
@@ -11,9 +12,12 @@ export const postListSchema: FastifySchema = {
       limit: { type: 'number' },
     },
   },
+  response: getReponseSchema('postList'),
 }
 
 export const postCreateSchema: RouterSchema<PostInput> = {
+  tags: ['posts'],
+  security: [{ bearerAuth: [] }],
   body: {
     type: 'object',
     required: ['title', 'content'],
@@ -23,9 +27,12 @@ export const postCreateSchema: RouterSchema<PostInput> = {
       published: { type: 'boolean' },
     },
   },
+  response: getReponseSchema('post'),
 }
 
 export const postUpdateSchema: RouterSchema<PostUpdate> = {
+  tags: ['posts'],
+  security: [{ bearerAuth: [] }],
   body: {
     type: 'object',
     required: ['id'],
@@ -36,9 +43,12 @@ export const postUpdateSchema: RouterSchema<PostUpdate> = {
       published: { type: 'boolean' },
     },
   },
+  response: getReponseSchema('post'),
 }
 
 export const postGetDeleteSchema: FastifySchema = {
+  tags: ['posts'],
+  security: [{ bearerAuth: [] }],
   params: {
     type: 'object',
     required: ['id'],
@@ -46,4 +56,5 @@ export const postGetDeleteSchema: FastifySchema = {
       id: { type: 'string' },
     },
   },
+  response: getReponseSchema('post'),
 }

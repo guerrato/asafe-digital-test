@@ -13,6 +13,7 @@ import { authMiddleware } from '~/middleware/auth.middleware'
 import { roleMiddleware } from '~/middleware/role.middleware'
 import { AuthenticatedRequest } from '~/models/auth.model'
 import { adminOnlyMiddleware } from '~/middleware/adminOnly.middleware'
+import { getReponseSchema } from './schemas/generic.schema'
 
 export const userRoutes = async (fastify: FastifyInstance, _: any, done: Function) => {
   const userController = container.resolve(UserController)
@@ -72,6 +73,11 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
   fastify.route({
     method: 'GET',
     url: '/',
+    schema: {
+      security: [{ bearerAuth: [] }],
+      tags: ['users'],
+      response: getReponseSchema('userList')
+    },
     preHandler: async (request: FastifyRequest, reply) => {
       await authMiddleware(request, reply)
       await roleMiddleware(request as AuthenticatedRequest, reply)
@@ -84,14 +90,17 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
     '/picture',
     {
       schema: {
+        tags: ['users'],
+        security: [{ bearerAuth: [] }],
         consumes: ['multipart/form-data'],
         body: {
           type: 'object',
           required: ['form_data'],
           properties: {
-            form_data: { $ref: '#userPictureSchema' },
+            form_data: { type: 'string', format: 'binary' },
           },
         },
+        response: getReponseSchema('user')
       },
       preHandler: async (request: FastifyRequest<{ Body: { form_data: any } }>, reply) =>
         await authMiddleware<FastifyRequest<{ Body: { form_data: any } }>>(request, reply),
