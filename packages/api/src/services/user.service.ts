@@ -19,7 +19,7 @@ export interface IUserService {
   delete(id: string): Promise<void>
   list(): Promise<UserReply[]>
   get(id: string): Promise<UserReply>
-  pictureUpload(id: string, picture: any): Promise<UserReply>
+  pictureUpload(id: string, formData: any): Promise<UserReply>
 }
 
 @autoInjectable()

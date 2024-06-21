@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyInstance, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
 import { UserController } from '../controllers/user.controller'
 import { userCreateSchema, userGetDeleteSchema, userUpdateRoleSchema, userUpdateSchema } from './schemas/user.schema'
@@ -85,22 +85,23 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
     '/picture',
     {
       schema: {
+        description: 'Upload a user picture',
         tags: ['users'],
         security: [{ bearerAuth: [] }],
         consumes: ['multipart/form-data'],
         body: {
           type: 'object',
-          required: ['form_data'],
+          required: ['media'],
           properties: {
-            form_data: { format: 'binary' },
+            media: { isFile: true },
           },
         },
         response: getReponseSchema('user'),
       },
-      preHandler: async (request: FastifyRequest<{ Body: { form_data: any } }>, reply) =>
-        await authMiddleware<FastifyRequest<{ Body: { form_data: any } }>>(request, reply),
+      preHandler: async (request: FastifyRequest<{ Body: { media: File } }>, reply) =>
+        await authMiddleware<FastifyRequest<{ Body: { media: File } }>>(request, reply),
     },
     async (request, reply) =>
-      await userController.uploadPicture(request as AuthenticatedRequest<{ Body: { form_data: any } }>, reply)
+      await userController.uploadPicture(request as AuthenticatedRequest<{ Body: { media: File } }>, reply)
   )
 }

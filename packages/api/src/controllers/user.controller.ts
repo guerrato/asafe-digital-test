@@ -73,13 +73,11 @@ export class UserController implements IUserController {
     }
   }
 
-  async uploadPicture(request: AuthenticatedRequest<{ Body: { form_data: any } }>, reply: FastifyReply): Promise<void> {
+  async uploadPicture(request: AuthenticatedRequest<{ Body: { media: any } }>, reply: FastifyReply): Promise<void> {
     try {
-      const { form_data }: { form_data: any } = request.body
+      const { media }: { media: any } = request.body
 
-      reply
-        .code(200)
-        .send(httpResponse({ data: await this.userService.pictureUpload(request.body.auth.id, form_data) }))
+      reply.code(200).send(httpResponse({ data: await this.userService.pictureUpload(request.body.auth.id, media) }))
     } catch (error) {
       throw error
     }

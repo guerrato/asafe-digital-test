@@ -3,7 +3,7 @@
 ## Task 1: Advanced Monorepo Setup (25 points) [Optional]
 
 - [x] Set up a monorepo structure using a tool like Lerna or Yarn Workspaces.
-- [ ] Consider creating separate packages for different concerns (e.g., API, services, utilities).
+- [x] Consider creating separate packages for different concerns (e.g., API, services, utilities).
 
 ## Task 2: Advanced Server Setup (20 points)
 
@@ -49,8 +49,8 @@
 ## Task 7: Monorepo and Separate Packages (25 points) [Optional]
 
 - [x] If you've chosen to set up a monorepo, ensure that the structure is well-organized.
-- [ ] Create separate packages for different concerns (e.g., API, services, utilities).
-- [ ] Demonstrate how changes in one package affect others.
+- [x] Create separate packages for different concerns (e.g., API, services, utilities).
+- [x] Demonstrate how changes in one package affect others.
 
 ## Adicional
 
@@ -58,6 +58,7 @@
 - [x] Add eslint
 - [x] Add husky
 - [ ] QA: Why I didn't use the fastify-jwt or fastify/auth
+- [ ] Talk about CI/CD and how Dockerfile can be used for horizontal scaling
 
 ## Submission Guidelines
 

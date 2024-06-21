@@ -67,4 +67,5 @@ typings/
 packages/*/dist/
 packages/*/.env.*
 packages/*/.tap
+packages/*/.coverage
 

@@ -42,7 +42,12 @@ export const buildServer = async (): Promise<FastifyInstance> => {
   bootstrap()
 
   const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
-  const fastify: FastifyInstance = Fastify({ logger: useLogger })
+  const fastify: FastifyInstance = Fastify({
+    logger: useLogger,
+    ajv: {
+      plugins: [require('@fastify/multipart').ajvFilePlugin],
+    },
+  })
   try {
     const multipartOpts = {
       attachFieldsToBody: true,
@@ -95,7 +100,6 @@ export const init = async () => {
     }
     return fastify
   } catch (err) {
-    console.log(err)
     process.exit(1)
   }
 }

@@ -14,7 +14,9 @@ export type RouterSchema<T> = FastifySchema & {
   response?: FastifySchema['response']
 }
 
-export const getReponseSchema = (type: 'user' | 'userList' | 'auth' | 'post' | 'postList') => {
+type ResponseType = 'user' | 'userList' | 'auth' | 'post' | 'postList'
+
+export const getReponseSchema = (type: ResponseType) => {
   const responseSchema: any = {
     '2xx': {
       properties: {
