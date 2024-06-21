@@ -102,7 +102,6 @@ export const init = async () => {
     }
     return fastify
   } catch (err) {
-    console.log((err as Error).message)
-    process.exit(1)
+    console.error((err as Error).message)
   }
 }

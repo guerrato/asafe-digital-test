@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify'
+import fastify, { FastifyInstance } from 'fastify'
 import 'reflect-metadata'
 import { container } from 'tsyringe'
 import { IAuthService } from '../src/services/auth.service'
@@ -27,7 +27,7 @@ describe('AuthController login', () => {
         login: jest.fn().mockResolvedValue('fakeToken'),
       })),
     })
-    fastify = await init()
+    fastify = (await init()) as FastifyInstance
   })
 
   afterAll(() => {
