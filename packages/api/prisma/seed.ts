@@ -1,17 +1,21 @@
 import { Post, Prisma, PrismaClient, Role } from '@prisma/client'
 import 'dotenv/config'
-import { generatePasswordHash } from '../src/utils/security'
+import { generatePasswordHash, isEmpty } from '@asafe-digital-test/utils'
 import Chance from 'chancets2'
 
 const prisma = new PrismaClient()
 async function main() {
+  if (isEmpty(process.env.SECRET_KEY)) {
+    throw new Error('DB_VAR_MISSING: Internal Error: Variables missing')
+  }
+
   await prisma.user.upsert({
     where: { email: 'cto@mailinator.com' },
     update: {},
     create: {
       email: 'cto@mailinator.com',
       name: 'CTO',
-      password: await generatePasswordHash('P@ssw0rd'),
+      password: await generatePasswordHash('P@ssw0rd', process.env.SECRET_KEY),
       role: Role.ADMIN,
     },
   })
@@ -35,7 +39,7 @@ async function main() {
     create: {
       email: 'john.doe@mailinator.com',
       name: 'John Doe',
-      password: await generatePasswordHash('P@ssw0rd'),
+      password: await generatePasswordHash('P@ssw0rd', process.env.SECRET_KEY),
       role: Role.WRITER,
       posts: { create: posts },
     },

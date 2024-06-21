@@ -4,7 +4,7 @@ import { autoInjectable, inject } from 'tsyringe'
 import { AuthenticatedRequest } from '../models/auth.model'
 import { UserInput, UserUpdate, UserUpdateRole } from '../models/user.model'
 import { IUserService } from '../services/user.service'
-import httpResponse from '../utils/httpResponse'
+import { httpResponse } from '@asafe-digital-test/utils'
 
 export interface IUserController {
   create(request: FastifyRequest<{ Body: UserInput }>, reply: FastifyReply): Promise<void>

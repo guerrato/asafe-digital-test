@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { start } from '../src/server'
+import { init } from '../src/startup'
 import { FastifyInstance } from 'fastify'
 import { bootstrap } from '../src/startup'
 
@@ -8,7 +8,7 @@ describe('GET /health', () => {
 
   beforeAll(async () => {
     bootstrap()
-    fastify = await start()
+    fastify = await init()
   })
 
   afterAll(() => {

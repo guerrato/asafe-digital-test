@@ -1,10 +1,7 @@
 import { autoInjectable, inject } from 'tsyringe'
 import { IUserRepository } from '../repositories/user.repository'
-import { formatEmail, isEmail, isEmpty } from '../utils/string'
-import { verify } from 'argon2'
-import { createToken } from '../utils/jwt'
+import { createToken, formatEmail, isEmail, isEmpty, verifyPassword } from '@asafe-digital-test/utils'
 import { AuthLogin } from '../models/auth.model'
-import { verifyPassword } from '../utils/security'
 
 export interface IAuthService {
   login(user: AuthLogin): Promise<string>
@@ -29,7 +26,7 @@ export class AuthService implements IAuthService {
       const userDB = await this.userRepository.findByEmail(email)
       if (isEmpty(userDB)) throw new Error('Invalid credentials')
 
-      const isValid = await verifyPassword(userDB.password, password)
+      const isValid = await verifyPassword(userDB.password, password, process.env.SECRET_KEY)
       if (!isValid) throw new Error('Invalid credentials')
 
       const payload = {

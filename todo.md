@@ -54,8 +54,8 @@
 
 ## Adicional
 
-- [ ] Add prettier
-- [ ] Add eslint
+- [x] Add prettier
+- [x] Add eslint
 - [x] Add husky
 - [ ] QA: Why I didn't use the fastify-jwt or fastify/auth
 

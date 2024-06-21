@@ -21,12 +21,16 @@ export const formatEmail = (email: string): string => {
 }
 
 export const isEmpty = <T>(str: T): str is IsEmpty<T> => {
-  if (typeof str === 'object') {
-    return Object.keys(str as object).length === 0
+  if (str === null || str === undefined || typeof str === 'undefined') {
+    return true
   }
 
-  if (str === null || str === undefined || typeof str === 'undefined' || (str as string).trim() === '') {
-    return true
+  if (typeof str === 'string') {
+    return str.trim() === ''
+  }
+
+  if (typeof str === 'object') {
+    return Object.keys(str as object).length === 0
   }
 
   return false

@@ -92,7 +92,7 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
           type: 'object',
           required: ['form_data'],
           properties: {
-            form_data: { type: 'string', format: 'binary' },
+            form_data: { format: 'binary' },
           },
         },
         response: getReponseSchema('user'),

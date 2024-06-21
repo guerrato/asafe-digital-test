@@ -9,14 +9,16 @@ export type HTTPResponse<T> = {
 
 export type ResponseContent<T> = Omit<HTTPResponse<T>, 'success'>
 
-const httpResponse = <T>(response: ResponseContent<T>): HTTPResponse<T> => {
+export const httpResponse = <T>(response: ResponseContent<T>): HTTPResponse<T> => {
   const { data, error, message } = response
   let success = true
 
   if (isEmpty(data) && isEmpty(error) && isEmpty(message)) {
     return {
       success: false,
-      message: 'data or error or message has to be filled in response',
+      message: null,
+      data: null,
+      error: 'data or error or message has to be filled in response',
     }
   }
 
@@ -31,5 +33,3 @@ const httpResponse = <T>(response: ResponseContent<T>): HTTPResponse<T> => {
     error: error ?? null,
   }
 }
-
-export default httpResponse

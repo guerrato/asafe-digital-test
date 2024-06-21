@@ -2,17 +2,8 @@ import { FastifyInstance } from 'fastify'
 import 'reflect-metadata'
 import { container } from 'tsyringe'
 import { IAuthService } from '../src/services/auth.service'
-import { start } from '../src/server'
+import { init } from '../src/startup'
 import request from 'supertest'
-
-// Mock the AuthService before importing the module that uses it
-/* jest.mock('../src/services/auth.service', () => {
-  return {
-    AuthService: jest.fn().mockImplementation(() => ({
-      login: jest.fn().mockResolvedValue('fakeToken'),
-    })),
-  }
-}) */
 
 jest.mock('../src/services/auth.service', () => ({
   AuthService: jest.fn().mockImplementation(() => ({
@@ -36,7 +27,7 @@ describe('AuthController login', () => {
         login: jest.fn().mockResolvedValue('fakeToken'),
       })),
     })
-    fastify = await start()
+    fastify = await init()
   })
 
   afterAll(() => {

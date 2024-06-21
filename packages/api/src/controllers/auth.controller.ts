@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { autoInjectable, inject } from 'tsyringe'
 import { AuthLogin } from '../models/auth.model'
 import { IAuthService } from '../services/auth.service'
-import httpResponse from '../utils/httpResponse'
+import { httpResponse } from '@asafe-digital-test/utils'
 
 export interface IAuthController {
   login(request: FastifyRequest<{ Body: AuthLogin }>, reply: FastifyReply): Promise<void>

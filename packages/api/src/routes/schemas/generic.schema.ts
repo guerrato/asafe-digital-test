@@ -85,7 +85,7 @@ export const getReponseSchema = (type: 'user' | 'userList' | 'auth' | 'post' | '
           title: { type: 'string' },
           content: { type: 'string' },
           published: { type: 'boolean' },
-          user_id: { type: 'string' },
+          likes: { type: 'number' },
           created_at: { type: 'string', format: 'date-time' },
           updated_at: { type: 'string', format: 'date-time' },
         },
@@ -93,17 +93,23 @@ export const getReponseSchema = (type: 'user' | 'userList' | 'auth' | 'post' | '
       break
     case 'postList':
       responseSchema['2xx'].properties.data = {
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            id: { type: 'string' },
-            title: { type: 'string' },
-            content: { type: 'string' },
-            published: { type: 'boolean' },
-            user_id: { type: 'string' },
-            created_at: { type: 'string', format: 'date-time' },
-            updated_at: { type: 'string', format: 'date-time' },
+        total: { type: 'number' },
+        currentPage: { type: 'number' },
+        totalPages: { type: 'number' },
+        limit: { type: 'number' },
+        posts: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              title: { type: 'string' },
+              content: { type: 'string' },
+              published: { type: 'boolean' },
+              likes: { type: 'number' },
+              created_at: { type: 'string', format: 'date-time' },
+              updated_at: { type: 'string', format: 'date-time' },
+            },
           },
         },
       }

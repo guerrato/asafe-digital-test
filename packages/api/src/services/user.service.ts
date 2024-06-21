@@ -1,9 +1,16 @@
 import { autoInjectable, inject } from 'tsyringe'
 import { UserInput, UserPictureUpdate, UserReply, UserUpdate, UserUpdateRole } from '../models/user.model'
 import { IUserRepository } from '../repositories/user.repository'
-import { formatEmail, formatPersonName, isCompleteName, isEmail, isEmpty } from '../utils/string'
-import { generatePasswordHash } from '../utils/security'
-import { saveFile, uploadFile } from '../utils/files'
+
+import {
+  formatEmail,
+  formatPersonName,
+  generatePasswordHash,
+  isCompleteName,
+  isEmail,
+  isEmpty,
+  uploadFile,
+} from '@asafe-digital-test/utils'
 
 export interface IUserService {
   create(user: UserInput): Promise<UserReply>
@@ -29,7 +36,7 @@ export class UserService implements IUserService {
 
       name = formatPersonName(name)
       email = formatEmail(email)
-      password = await generatePasswordHash(password)
+      password = await generatePasswordHash(password, process.env.SECRET_KEY)
 
       return await this.userRepository.create({ email, name, password })
     } catch (error) {
@@ -70,7 +77,10 @@ export class UserService implements IUserService {
 
     // Validate new user's password if informed
     if (!isEmpty(user.password)) {
-      user.password = await generatePasswordHash(user.password)
+      if (isEmpty(process.env.SECRET_KEY)) {
+        throw new Error('SRV_VAR_MISSING: Internal Error: Variables missing')
+      }
+      user.password = await generatePasswordHash(user.password, process.env.SECRET_KEY)
     }
 
     return await this.userRepository.update(user)

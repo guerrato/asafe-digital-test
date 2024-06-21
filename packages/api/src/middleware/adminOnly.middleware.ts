@@ -1,9 +1,7 @@
 import { FastifyReply } from 'fastify'
 import { JwtPayload } from 'jsonwebtoken'
 import { AuthenticatedRequest } from '../models/auth.model'
-import httpResponse from '../utils/httpResponse'
-import { verifyToken } from '../utils/jwt'
-import { isEmpty } from '../utils/string'
+import { httpResponse, isEmpty, verifyToken } from '@asafe-digital-test/utils'
 
 export const adminOnlyMiddleware = async <T extends AuthenticatedRequest>(request: T, reply: FastifyReply) => {
   try {
