@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc --module commonjs",
     "dev": "npm run build && node -e 'require(\"./dist/server.js\").start()'",
-    "test": "jest --watch"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
