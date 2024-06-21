@@ -66,4 +66,5 @@ typings/
 # Auto-generated Packages dist folder/files
 packages/*/dist/
 packages/*/.env.*
+packages/*/.tap
 

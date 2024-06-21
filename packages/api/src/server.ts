@@ -3,33 +3,30 @@ import 'dotenv/config'
 import { fastifyMultipart } from '@fastify/multipart'
 import fastifyWebsocket from '@fastify/websocket'
 import cors from '@fastify/cors'
-import { authRoutes, postRoutes, userRoutes } from '~/routes'
+import { authRoutes, indexRoutes, postRoutes, userRoutes } from '~/routes'
 import { websocket } from '~/websocket'
 import { swaggerLoader } from '~/swagger'
 
-// import { websocketRoutes } from '~/websocket'
-
-const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
-
-const fastify: FastifyInstance = Fastify({ logger: useLogger })
-
-const multipartOpts = {
-  attachFieldsToBody: true,
-  sharedSchemaId: '#userPictureSchema',
-}
-
-fastify.register(cors, { origin: '*', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'] })
-fastify.register(fastifyMultipart, multipartOpts)
-fastify.register(fastifyWebsocket)
-websocket(fastify)
-
-swaggerLoader(fastify)
-fastify.register(userRoutes, { prefix: '/users', tags: ['users'] })
-fastify.register(authRoutes, { prefix: '/auth' })
-fastify.register(postRoutes, { prefix: '/posts' })
-
 export const start = async () => {
+  const useLogger: boolean = ['local', 'development'].includes(process.env.NODE_ENV ?? '') ? true : false
+  const fastify: FastifyInstance = Fastify({ logger: useLogger })
   try {
+    const multipartOpts = {
+      attachFieldsToBody: true,
+      sharedSchemaId: '#userPictureSchema',
+    }
+
+    fastify.register(cors, { origin: '*', methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'] }) // In real world, you should specify the origin
+    fastify.register(fastifyMultipart, multipartOpts)
+    fastify.register(fastifyWebsocket)
+
+    swaggerLoader(fastify)
+    websocket(fastify)
+    fastify.register(indexRoutes)
+    fastify.register(userRoutes, { prefix: '/users', tags: ['users'] })
+    fastify.register(authRoutes, { prefix: '/auth' })
+    fastify.register(postRoutes, { prefix: '/posts' })
+
     await fastify.listen({ port: (process.env.PORT as number | undefined) || 3000, ipv6Only: false })
     const address = fastify.server.address()
 
@@ -52,6 +49,8 @@ export const start = async () => {
         console.log(addressMessage)
       }
     }
+
+    return fastify
   } catch (err) {
     fastify.log.error(err)
     process.exit(1)
