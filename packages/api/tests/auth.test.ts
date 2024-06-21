@@ -30,8 +30,8 @@ describe('AuthController login', () => {
     fastify = (await init()) as FastifyInstance
   })
 
-  afterAll(() => {
-    fastify.close()
+  afterAll(async () => {
+    await fastify.close()
   })
 
   beforeEach(() => {

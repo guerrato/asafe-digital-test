@@ -9,8 +9,8 @@ describe('GET /health', () => {
     fastify = (await init()) as FastifyInstance
   })
 
-  afterAll(() => {
-    fastify.close()
+  afterAll(async () => {
+    await fastify.close()
   })
 
   test('should return "OK" on /health route', async () => {
