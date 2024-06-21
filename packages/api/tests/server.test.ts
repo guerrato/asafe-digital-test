@@ -7,7 +7,6 @@ describe('GET /health', () => {
   let fastify: FastifyInstance
 
   beforeAll(async () => {
-    bootstrap()
     fastify = await init()
   })
 

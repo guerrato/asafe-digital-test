@@ -83,23 +83,26 @@ export const init = async () => {
       throw new Error('Server address is not available.')
     }
 
-    if (process.env.NODE_ENV !== 'development') {
-      const port = typeof address === 'string' ? address : address?.port
-      console.log(`Server listening at ${port}`)
-    } else {
-      if (typeof address === 'string') {
-        console.log(`Server listening at ${address}`)
+    if (process.env.NODE_ENV !== 'test') {
+      if (process.env.NODE_ENV !== 'development') {
+        const port = typeof address === 'string' ? address : address?.port
+        console.log(`Server listening at ${port}`)
       } else {
-        let addressMessage = `\n\n\x1b[32mServer listening at\x1b[0m\n`
-        for (const addr of fastify.addresses()) {
-          addressMessage += `\t • http://${addr.address}:${addr.port}\n`
-        }
+        if (typeof address === 'string') {
+          console.log(`Server listening at ${address}`)
+        } else {
+          let addressMessage = `\n\n\x1b[32mServer listening at\x1b[0m\n`
+          for (const addr of fastify.addresses()) {
+            addressMessage += `\t • http://${addr.address}:${addr.port}\n`
+          }
 
-        console.log(addressMessage)
+          console.log(addressMessage)
+        }
       }
     }
     return fastify
   } catch (err) {
+    console.log((err as Error).message)
     process.exit(1)
   }
 }
