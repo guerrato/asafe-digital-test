@@ -1,7 +1,6 @@
 import request from 'supertest'
 import { init } from '../src/startup'
 import { FastifyInstance } from 'fastify'
-import { bootstrap } from '../src/startup'
 
 describe('GET /health', () => {
   let fastify: FastifyInstance
