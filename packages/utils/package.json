@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "main": "index.ts",
   "description": "Utils package for the A-Safe Digital test",
+  "type": "module",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "test": "jest"
   },
   "repository": {

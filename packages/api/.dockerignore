@@ -1,4 +1,7 @@
-packages/*/dist/
-packages/*/.env.*
-packages/*/.tap
-packages/*/.coverage
+dist/
+.env
+.tap
+coverage
+Dockerfile
+.dockerignore
+node_modules/

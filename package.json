@@ -3,13 +3,14 @@
   "name": "asafe-digital-test",
   "version": "1.0.0",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "description": "My project for the A-Safe Digital test",
   "scripts": {
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md}' --config ./.prettierrc",
     "format:check": "prettier --check './**/*.{js,jsx,ts,tsx,css,md}' --config ./.prettierrc",
     "test": "npm -w packages/api test; npm -w packages/utils test",
+    "start": "npm -w packages/api start",
     "prepare": "husky"
   },
   "repository": {

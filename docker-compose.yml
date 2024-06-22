@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  a-safe:
+    container_name: a-safe
+    working_dir: /app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    command: ['npm', 'start']
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - API_DOMAIN=prod_domain.com
+      - DATABASE_URL=postgresql://postgres:Secr%23tPassw0rd@database.postgres:5432/a-safe?schema=public
+      - SECRET_KEY=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+      - JWT_SECRET=iQVvLkOYEW6XoU6VG56jpLY9fufik6fO3aQxRF8u4zo=

@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { container } from 'tsyringe'
 import Fastify, { FastifyInstance } from 'fastify'
 import 'dotenv/config'
-import { fastifyMultipart } from '@fastify/multipart'
+import { ajvFilePlugin, fastifyMultipart } from '@fastify/multipart'
 import fastifyWebsocket from '@fastify/websocket'
 import cors from '@fastify/cors'
 import { authRoutes, indexRoutes, postRoutes, userRoutes } from './routes'
@@ -18,6 +18,7 @@ import { AuthController, IAuthController } from './controllers/auth.controller'
 import { IPostRepository, PostRepository } from './repositories/post.repository'
 import { IPostService, PostService } from './services/post.service'
 import { IPostController, PostController } from './controllers/post.controller'
+import { isEmpty } from '@asafe-digital-test/utils'
 
 export const bootstrap = () => {
   // Resolve Singletons
@@ -45,7 +46,7 @@ export const buildServer = async (): Promise<FastifyInstance> => {
   const fastify: FastifyInstance = Fastify({
     logger: useLogger,
     ajv: {
-      plugins: [require('@fastify/multipart').ajvFilePlugin],
+      plugins: [ajvFilePlugin],
     },
   })
   try {
@@ -76,7 +77,11 @@ export const init = async () => {
   try {
     bootstrap()
     fastify = await buildServer()
-    await fastify.listen({ port: (process.env.PORT as number | undefined) || 3000, ipv6Only: false })
+    await fastify.listen({
+      port: (process.env.PORT as number | undefined) || 3000,
+      host: !isEmpty(process.env.HOST) ? process.env.HOST : '127.0.0.1',
+      ipv6Only: false,
+    })
     const address = fastify.server.address()
 
     if (!address) {

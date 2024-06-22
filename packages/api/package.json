@@ -3,10 +3,11 @@
   "name": "@asafe-digital-test/api",
   "version": "1.0.0",
   "description": "My project for the A-Safe Digital test",
-  "main": "src/server.ts",
+  "main": "src/server",
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.json",
+    "start": "node --es-module-specifier-resolution=node --import tsx/esm dist/server",
     "dev": "tsx watch ./src/server.ts",
     "test": "jest"
   },
