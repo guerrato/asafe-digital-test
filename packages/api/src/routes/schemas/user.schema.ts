@@ -3,6 +3,7 @@ import { UserInput, UserUpdateRole } from '../../models/user.model'
 import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const userCreateSchema: RouterSchema<UserInput> = {
+  description: 'Creates a new user.',
   tags: ['users'],
   body: {
     type: 'object',
@@ -17,6 +18,7 @@ export const userCreateSchema: RouterSchema<UserInput> = {
 }
 
 export const userUpdateSchema: RouterSchema<UserInput> = {
+  description: 'Updates user data.',
   tags: ['users'],
   security: [{ bearerAuth: [] }],
   body: {
@@ -32,6 +34,7 @@ export const userUpdateSchema: RouterSchema<UserInput> = {
 }
 
 export const userUpdateRoleSchema: RouterSchema<UserUpdateRole> = {
+  description: 'For user ADMIN role only: Updates user role.',
   tags: ['users'],
   security: [{ bearerAuth: [] }],
   body: {
@@ -45,7 +48,22 @@ export const userUpdateRoleSchema: RouterSchema<UserUpdateRole> = {
   response: getReponseSchema('user'),
 }
 
-export const userGetDeleteSchema: FastifySchema = {
+export const userDeleteSchema: FastifySchema = {
+  description: 'Delete a user.',
+  tags: ['users'],
+  security: [{ bearerAuth: [] }],
+  params: {
+    type: 'object',
+    required: ['id'],
+    properties: {
+      id: { type: 'string' },
+    },
+  },
+  response: getReponseSchema('user'),
+}
+
+export const userGetSchema: FastifySchema = {
+  description: 'Get a single user.',
   tags: ['users'],
   security: [{ bearerAuth: [] }],
   params: {

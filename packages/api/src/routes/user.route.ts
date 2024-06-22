@@ -2,7 +2,13 @@ import 'reflect-metadata'
 import { FastifyInstance, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
 import { UserController } from '../controllers/user.controller'
-import { userCreateSchema, userGetDeleteSchema, userUpdateRoleSchema, userUpdateSchema } from './schemas/user.schema'
+import {
+  userCreateSchema,
+  userDeleteSchema,
+  userGetSchema,
+  userUpdateRoleSchema,
+  userUpdateSchema,
+} from './schemas/user.schema'
 import { UserInput, UserUpdate, UserUpdateRole } from '../models/user.model'
 import { authMiddleware } from '../middleware/auth.middleware'
 import { roleMiddleware } from '../middleware/role.middleware'
@@ -44,7 +50,7 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
   fastify.route({
     method: 'DELETE',
     url: '/:id',
-    schema: userGetDeleteSchema,
+    schema: userDeleteSchema,
     preHandler: async (request: FastifyRequest<{ Params: { id: string } }>, reply) => {
       await authMiddleware<FastifyRequest<{ Params: { id: string } }>>(request, reply)
       await roleMiddleware(request as AuthenticatedRequest<{ Params: { id: string } }>, reply)
@@ -56,7 +62,7 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
   fastify.route({
     method: 'GET',
     url: '/:id',
-    schema: userGetDeleteSchema,
+    schema: userGetSchema,
     preHandler: async (request: FastifyRequest<{ Params: { id: string } }>, reply) => {
       await authMiddleware<FastifyRequest<{ Params: { id: string } }>>(request, reply)
       await roleMiddleware(request as AuthenticatedRequest<{ Params: { id: string } }>, reply)
@@ -69,6 +75,7 @@ export const userRoutes = async (fastify: FastifyInstance, _: any, done: Functio
     method: 'GET',
     url: '/',
     schema: {
+      description: 'List all the stored users in the database.',
       security: [{ bearerAuth: [] }],
       tags: ['users'],
       response: getReponseSchema('userList'),

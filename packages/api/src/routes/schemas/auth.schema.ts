@@ -2,6 +2,7 @@ import { AuthLogin } from '../../models/auth.model'
 import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const authLoginSchema: RouterSchema<AuthLogin> = {
+  description: 'User login endpoint',
   tags: ['auth'],
   body: {
     type: 'object',

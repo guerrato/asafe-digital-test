@@ -57,12 +57,12 @@
 - [x] Add prettier
 - [x] Add eslint
 - [x] Add husky
-- [ ] QA: Why I didn't use the fastify-jwt or fastify/auth
-- [ ] Say about tests
-- [ ] Talk about CI/CD and how Dockerfile can be used for horizontal scaling
-- [ ] Say about Project structure
+- [x] Say about tests
+- [x] Talk about CI/CD and how Dockerfile can be used for horizontal scaling
+- [x] Say about Project structure
 - [x] Seeding DB
-- [ ] Routes description
+- [x] Routes description
+- [ ] Websoket
 
 - Introducao
 - Setup
@@ -72,6 +72,6 @@
 
 ## Submission Guidelines
 
-- [ ] Share the link to the Git repository containing your code.
+- [x] Share the link to the Git repository containing your code.
 - [x] Provide a detailed README with instructions, architecture overview, and any additional information.
 - Ensure that your API is deployed, and share the deployment link (e.g., Heroku, AWS).

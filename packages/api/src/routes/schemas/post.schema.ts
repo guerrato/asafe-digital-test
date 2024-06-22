@@ -3,6 +3,7 @@ import { PostInput, PostUpdate } from '../../models/post.model'
 import { RouterSchema, getReponseSchema } from './generic.schema'
 
 export const postListSchema: FastifySchema = {
+  description: 'List all posts. The list is paginated',
   tags: ['posts'],
   querystring: {
     type: 'object',
@@ -16,6 +17,7 @@ export const postListSchema: FastifySchema = {
 }
 
 export const postCreateSchema: RouterSchema<PostInput> = {
+  description: 'Create a new post',
   tags: ['posts'],
   security: [{ bearerAuth: [] }],
   body: {
@@ -31,6 +33,7 @@ export const postCreateSchema: RouterSchema<PostInput> = {
 }
 
 export const postUpdateSchema: RouterSchema<PostUpdate> = {
+  description: 'Update a post',
   tags: ['posts'],
   security: [{ bearerAuth: [] }],
   body: {
@@ -46,7 +49,22 @@ export const postUpdateSchema: RouterSchema<PostUpdate> = {
   response: getReponseSchema('post'),
 }
 
-export const postGetDeleteSchema: FastifySchema = {
+export const postDeleteSchema: FastifySchema = {
+  description: 'Delete a post',
+  tags: ['posts'],
+  security: [{ bearerAuth: [] }],
+  params: {
+    type: 'object',
+    required: ['id'],
+    properties: {
+      id: { type: 'string' },
+    },
+  },
+  response: getReponseSchema('post'),
+}
+
+export const postGetSchema: FastifySchema = {
+  description: 'Get a single post',
   tags: ['posts'],
   security: [{ bearerAuth: [] }],
   params: {

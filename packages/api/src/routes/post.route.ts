@@ -2,7 +2,13 @@ import 'reflect-metadata'
 import { FastifyInstance, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
 import { PostController } from '../controllers/post.controller'
-import { postCreateSchema, postGetDeleteSchema, postListSchema, postUpdateSchema } from './schemas/post.schema'
+import {
+  postCreateSchema,
+  postGetSchema,
+  postDeleteSchema,
+  postListSchema,
+  postUpdateSchema,
+} from './schemas/post.schema'
 import { PostInput, PostListInput, PostUpdate } from '../models/post.model'
 import { authMiddleware } from '../middleware/auth.middleware'
 import { AuthenticatedRequest } from '../models/auth.model'
@@ -39,7 +45,7 @@ export const postRoutes = async (fastify: FastifyInstance, _: any) => {
   fastify.route({
     method: 'DELETE',
     url: '/:id',
-    schema: postGetDeleteSchema,
+    schema: postDeleteSchema,
     preHandler: authMiddleware<FastifyRequest<{ Params: { id: string } }>>,
     handler: async (request: FastifyRequest<{ Params: { id: string } }>, reply) =>
       await postController.delete(request as AuthenticatedRequest<{ Params: { id: string } }>, reply),
@@ -48,7 +54,7 @@ export const postRoutes = async (fastify: FastifyInstance, _: any) => {
   fastify.route({
     method: 'GET',
     url: '/:id',
-    schema: postGetDeleteSchema,
+    schema: postGetSchema,
     preHandler: async (request: FastifyRequest<{ Params: { id: string } }>, reply) => {
       if (request.headers.authorization) {
         return authMiddleware<FastifyRequest<{ Params: { id: string } }>>(request, reply)

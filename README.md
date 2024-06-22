@@ -200,7 +200,7 @@ The purpose of the `utils` package is to become an NPM package, intended for use
 
 ## API
 
-On the other hand, the `API` package is designed to function as a service, to be hosted on servers, and capable of scaling horizontally without issues.
+On the other hand, the `API` package is designed to function as a service, to be hosted on servers, and capable of `scaling horizontally without issues`.
 
 Although both packages reside in the same repository, they serve entirely different purposes. This is also why a Dockerfile has been included as an example, providing a deployment method that can be used with AWS, Azure, Kubernetes, or any other orchestrator.
 
@@ -247,6 +247,40 @@ This doesn't imply that the `Services` neglect unauthorized operations. However,
 
 Here are the packages that define the entity contracts bridging the aforementioned layers. The models encapsulated here represent the core data structures and relationships fundamental to the application's domain. These models serve as the foundation for ensuring data consistency and integrity across various components of the system. They define how data is structured, validated, and manipulated throughout the application, fostering coherence and reliability in data management operations.
 
+## Solid and Dependency Injection
+
+The project prioritizes adherence to `SOLID` principles, aiming to establish a robust and maintainable software architecture. Each component diligently follows the principles of Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion.
+
+`Dependency Injection (DI)` plays a pivotal role in fostering loose coupling between components, thereby enhancing testability, facilitating easier refactoring and extension of functionalities. By implementing DI, the project promotes modular design, where dependencies are injected dynamically rather than being hardcoded. This approach enhances flexibility and scalability.
+
+Through these practices, the project strives to achieve exemplary code quality, readability, and extensibility, ensuring that modifications and updates can be implemented seamlessly without compromising the overall system integrity.
+
+## Tests
+
+I have implemented test examples using Jest and Supertest to showcase my commitment to testing in this technical project. The goal of these tests is not to provide exhaustive coverage, as testing is a vast and essential topic. Instead, these examples aim to demonstrate how testing can be implemented effectively.
+
+Jest and Supertest were chosen for their simplicity and effectiveness in testing Node.js applications and APIs. These tests cover critical scenarios to validate the functionality and behavior of the application endpoints, ensuring reliability and correctness.
+
+While these examples serve as a starting point, they highlight the importance of incorporating testing practices into software development to enhance quality and maintainability. They demonstrate my approach to ensuring that the application behaves as expected under different conditions, providing confidence in its performance.
+
+## Useful Tools and Team Productivity
+
+In this project, I've integrated two essential tools—Prettier and Husky—to enhance code formatting consistency and streamline the development process:
+
+- **Prettier**: Ensures consistent code formatting across the project. By adopting Prettier, the team adheres to a standardized code style, enhancing readability and reducing formatting-related issues during code reviews.
+
+- **Husky**: Implements Git hooks to enforce pre-commit checks. Specifically, Husky is configured to prevent commits that include unformatted code or fail unit tests. This ensures that all code commits meet quality standards before being pushed to the repository, maintaining codebase integrity and minimizing errors in the development workflow.
+
+These tools are instrumental in fostering a collaborative environment where code quality, consistency, and productivity are prioritized, ultimately contributing to efficient project development and team synergy.
+
 ## Conclusion
 
-Choose the method that best suits your environment and familiarity with Docker. Both approaches provide a straightforward way to start and interact with the "blog posts" API.
+In conclusion, this technical test project for A-SAFE Digital showcases a comprehensive approach to modern API development and software architecture. By leveraging technologies such as Fastify, Prisma, Docker, and more within a monorepo structure, the project demonstrates versatility and scalability in building a robust "blog posts" API.
+
+The project emphasizes adherence to SOLID principles and utilizes Dependency Injection to promote modular design and maintainable code. This architectural approach ensures flexibility and scalability, enabling seamless integration of new features and enhancements.
+
+Testing plays a pivotal role in the project's development, exemplified by the implementation of Jest and Supertest. These tests validate critical functionalities of the API, ensuring reliability and correctness across different scenarios.
+
+Moreover, the integration of tools like Prettier and Husky underscores a commitment to code quality and team productivity. Prettier maintains consistent code formatting, while Husky enforces pre-commit checks, minimizing errors and enhancing collaboration among team members.
+
+Overall, this project not only meets technical requirements but also exemplifies best practices in API development, testing, and team workflow management. It serves as a testament to my capabilities in delivering scalable, maintainable software solutions that adhere to industry standards and promote efficient collaboration.
