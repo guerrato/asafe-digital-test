@@ -58,10 +58,20 @@
 - [x] Add eslint
 - [x] Add husky
 - [ ] QA: Why I didn't use the fastify-jwt or fastify/auth
+- [ ] Say about tests
 - [ ] Talk about CI/CD and how Dockerfile can be used for horizontal scaling
+- [ ] Say about Project structure
+- [x] Seeding DB
+- [ ] Routes description
+
+- Introducao
+- Setup
+- Clone Repo
+- Docker
+- Local
 
 ## Submission Guidelines
 
-- Share the link to the Git repository containing your code.
-- Provide a detailed README with instructions, architecture overview, and any additional information.
+- [ ] Share the link to the Git repository containing your code.
+- [x] Provide a detailed README with instructions, architecture overview, and any additional information.
 - Ensure that your API is deployed, and share the deployment link (e.g., Heroku, AWS).
