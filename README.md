@@ -263,6 +263,41 @@ Jest and Supertest were chosen for their simplicity and effectiveness in testing
 
 While these examples serve as a starting point, they highlight the importance of incorporating testing practices into software development to enhance quality and maintainability. They demonstrate my approach to ensuring that the application behaves as expected under different conditions, providing confidence in its performance.
 
+## WebSocket Implementation for Real-Time Interactivity
+
+In addition to RESTful API endpoints, this project incorporates WebSocket functionality using fastify-websocket to facilitate real-time interactions. The WebSocket feature is specifically designed to propagate likes and dislikes in a dynamic and instantaneous manner.
+
+### WebSocket Integration
+
+The WebSocket implementation enhances user engagement by allowing immediate updates to posts based on user reactions. It enables clients to receive live notifications whenever a post receives a like or dislike as the project example of using, ensuring a responsive and interactive user experience.
+
+## Using it:
+
+Access (you can use Postman to make it easier):
+
+```bash
+ws://127.0.0.1:3000
+```
+
+as the message send:
+
+```json
+{
+  "id": "post_id",
+  "action": "like/dislike"
+}
+```
+
+### Technology Stack
+
+- **Fastify**: Provides a robust and efficient web framework for handling WebSocket connections alongside traditional HTTP requests.
+- **fastify-websocket**: Extends Fastify to support WebSocket protocols, enabling bidirectional communication channels between clients and the server.
+- **Real Time Updates**: Enables instant propagation of user reactions (likes/dislikes) across connected clients without the need for polling or frequent API calls.
+
+### Benefits
+
+By leveraging WebSocket technology, the project not only enhances user engagement but also demonstrates the capability to implement real-time features seamlessly within the existing API infrastructure. This approach showcases versatility in handling both traditional RESTful operations and WebSocket-driven functionalities, aligning with modern expectations for interactive web applications.
+
 ## Useful Tools and Team Productivity
 
 In this project, I've integrated two essential tools—Prettier and Husky—to enhance code formatting consistency and streamline the development process:
@@ -278,6 +313,8 @@ These tools are instrumental in fostering a collaborative environment where code
 In conclusion, this technical test project for A-SAFE Digital showcases a comprehensive approach to modern API development and software architecture. By leveraging technologies such as Fastify, Prisma, Docker, and more within a monorepo structure, the project demonstrates versatility and scalability in building a robust "blog posts" API.
 
 The project emphasizes adherence to SOLID principles and utilizes Dependency Injection to promote modular design and maintainable code. This architectural approach ensures flexibility and scalability, enabling seamless integration of new features and enhancements.
+
+The WebSocket integration using fastify-websocket in this project underscores its commitment to delivering responsive and interactive API solutions. By enabling real-time propagation of likes and dislikes, the project enhances user engagement and showcases proficiency in leveraging cutting-edge technologies for modern web development challenges.
 
 Testing plays a pivotal role in the project's development, exemplified by the implementation of Jest and Supertest. These tests validate critical functionalities of the API, ensuring reliability and correctness across different scenarios.
 
